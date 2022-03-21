@@ -4,7 +4,7 @@ This applications makes transcription from call phones URLs, with cache-system t
 
 ## Requisites:
 
-- NodeJS >= 10.0
+- NodeJS >= 12.0
 - MongoDB
 
 ## Configuring
