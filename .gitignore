@@ -1,0 +1,6 @@
+node_modules/
+.env
+.idea
+google-speech-api/google-credentials.json
+google-credentials.json
+google-speech-api/temp/*
