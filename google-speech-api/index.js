@@ -51,7 +51,8 @@ const transcriptAudioFromUrl = async (url, languague = 'pt-BR', model = 'phone_c
       sampleRateHertz: 16000,
       languageCode: languague,
       model: model,
-      enableAutomaticPunctuation: true
+      enableAutomaticPunctuation: true,
+		  useEnhanced: true
     },
   };
 
