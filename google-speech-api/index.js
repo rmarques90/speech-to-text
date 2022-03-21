@@ -64,7 +64,7 @@ const transcriptAudioFromUrl = async (url, languague = 'pt-BR', model = 'phone_c
 
   const billedTime = response.totalBilledTime.seconds;
 
-  // fs.unlinkSync(`./google-speech-api/temp/${filename}.wav`);
+  fs.unlinkSync(`./google-speech-api/temp/${filename}.wav`);
 
   return { transcription, billedTime };
 };
