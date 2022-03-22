@@ -10,15 +10,18 @@ const getTranscription = async (audioUrl, language = 'pt-BR', forceReloadFromDat
   if (!transcriptedObj || forceReloadFromDatabase) {
     transcriptedObj = await transcriptAudioFromUrl(audioUrl, language);
     if (transcriptedObj && transcriptedObj.transcription) {
+      // eslint-disable-next-line no-underscore-dangle
       if (transcriptedObj._id) {
-          await updateTranscription(transcriptedObj._id, transcriptedObj);
+        // eslint-disable-next-line no-underscore-dangle
+        await updateTranscription(transcriptedObj._id, transcriptedObj);
       } else {
-          await saveTranscription({...transcriptedObj, url: audioUrl});
+        await saveTranscription({ ...transcriptedObj, url: audioUrl });
       }
     }
   }
-
+  // eslint-disable-next-line no-underscore-dangle
   delete transcriptedObj._id;
+  // eslint-disable-next-line no-underscore-dangle
   delete transcriptedObj._v;
   return transcriptedObj;
 };
