@@ -50,9 +50,9 @@ const transcriptAudioFromUrl = async (url, languague = 'pt-BR', model = 'phone_c
       encoding: 'MP3',
       sampleRateHertz: 16000,
       languageCode: languague,
-      model: model,
+      model,
       enableAutomaticPunctuation: true,
-		  useEnhanced: true
+      useEnhanced: true,
     },
   };
 
