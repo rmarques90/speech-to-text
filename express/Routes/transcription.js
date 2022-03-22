@@ -13,7 +13,7 @@ router.use(async (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-router.post('/generate', async (req, res) => {
+router.post('/phone-call', async (req, res) => {
   const { body } = req;
   if (!body) {
     res.status(400).json({ message: 'invalid body' });

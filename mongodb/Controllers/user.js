@@ -6,8 +6,12 @@ const saveUser = async (user) => {
   return newUser.toObject();
 };
 
-const getUserByRelatedId = async (relatedId) => User.findOne({ relatedId });
+const getUserByRelatedId = async (relatedId) => User.findOne({ relatedId }).exec();
+
+const listUsers = async (params = {}) => User.find(params).exec();
+
+const resetAllUsersCredits = async () => User.updateMany({}, { $set: { usedCredits: 0 } }).exec();
 
 module.exports = {
-  saveUser, getUserByRelatedId,
+  saveUser, getUserByRelatedId, listUsers, resetAllUsersCredits,
 };
