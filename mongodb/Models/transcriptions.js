@@ -5,6 +5,7 @@ const Transcription = new Schema({
   url: {
     type: String,
     required: true,
+    index: true,
   },
   transcription: {
     type: String,
@@ -18,6 +19,11 @@ const Transcription = new Schema({
   timeSeconds: {
     type: Number,
   },
+  userId: {
+    type: mongoose.ObjectId,
+  },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model('Transcription', Transcription);

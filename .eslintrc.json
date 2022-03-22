@@ -8,11 +8,10 @@
         "airbnb-base"
     ],
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "2021"
     },
     "rules": {
         "linebreak-style": "off",
-        "no-console": "off",
-        "code": 300
+        "no-console": "off"
     }
 }
