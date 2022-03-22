@@ -6,6 +6,8 @@ const saveUser = async (user) => {
   return newUser.toObject();
 };
 
+const getUserByRelatedId = async (relatedId) => User.findOne({ relatedId });
+
 module.exports = {
-  saveUser,
+  saveUser, getUserByRelatedId,
 };

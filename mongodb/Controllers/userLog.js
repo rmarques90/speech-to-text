@@ -6,6 +6,14 @@ const saveUserLog = async (userLog) => {
   return userLogToSave.toObject();
 };
 
+const convertActualUserDocToLog = (userDoc) => {
+  const userLog = new UserLog();
+  // eslint-disable-next-line no-underscore-dangle
+  userLog.userId = userDoc._id;
+  userLog.usedCredits = userDoc.usedCredits;
+  return userLog;
+};
+
 module.exports = {
-  saveUserLog,
+  saveUserLog, convertActualUserDocToLog,
 };
