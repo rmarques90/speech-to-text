@@ -7,7 +7,7 @@ let client;
 
 const getSpeechClient = () => {
   if (!client) {
-    client = new speech.SpeechClient({ projectId: 'hotdog-project-288419', keyFilename: './google-credentials.json' });
+    client = new speech.SpeechClient({ projectId: process.env.GOOGLE_PROJECT_ID, keyFilename: './google-credentials.json' });
   }
   return client;
 };
