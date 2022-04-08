@@ -1,5 +1,6 @@
 const { transcriptAudioFromUrl } = require('../../google-speech-api');
 const { findTranscriptionByUrl, saveTranscription, updateTranscription } = require('../../mongodb/Controllers/transcriptions');
+const { getUserByRelatedId, debitOneUserCredit } = require('../../mongodb/Controllers/user');
 
 const getTranscription = async (audioUrl, language = 'pt-BR', forceReloadFromDatabase = false) => {
   if (!audioUrl) {
@@ -26,6 +27,16 @@ const getTranscription = async (audioUrl, language = 'pt-BR', forceReloadFromDat
   return transcriptedObj;
 };
 
+const userHasCredits = async (relatedId) => {
+  const user = await getUserByRelatedId(relatedId);
+  if (!user || user.usedCredits > user.creditsPerMonth) {
+    return false;
+  }
+  return true;
+};
+
+const debitUserCredit = async (relatedId) => debitOneUserCredit(relatedId);
+
 module.exports = {
-  getTranscription,
+  getTranscription, userHasCredits, debitUserCredit,
 };

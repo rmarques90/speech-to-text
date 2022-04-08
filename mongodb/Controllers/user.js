@@ -12,6 +12,17 @@ const listUsers = async (params = {}) => User.find(params).exec();
 
 const resetAllUsersCredits = async () => User.updateMany({}, { $set: { usedCredits: 0 } }).exec();
 
+const debitOneUserCredit = async (userRelatedId) => {
+  const user = await getUserByRelatedId(userRelatedId);
+  if (!user) {
+    throw new Error('user not found');
+  }
+
+  user.usedCredits += 1;
+  await user.save();
+  return user.toObject();
+};
+
 module.exports = {
-  saveUser, getUserByRelatedId, listUsers, resetAllUsersCredits,
+  saveUser, getUserByRelatedId, listUsers, resetAllUsersCredits, debitOneUserCredit,
 };
