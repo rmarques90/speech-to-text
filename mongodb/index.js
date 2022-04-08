@@ -6,7 +6,7 @@ const startConnection = async () => {
   const mongodbURL = process.env.MONGO_DB_HOST;
 
   if (!mongodbURL) {
-    console.error('Invalid MONGO_DB_URL');
+    console.error('Invalid MONGO_DB_HOST');
     process.exit(1);
   }
 
