@@ -53,7 +53,6 @@ const transcriptAudioFromUrl = async (url, languague = 'pt-BR', model = 'phone_c
       languageCode: languague,
       model,
       enableAutomaticPunctuation: true,
-      useEnhanced: true,
     },
   };
 
