@@ -27,9 +27,9 @@ const logger = winston.createLogger({
   exitOnError: false,
   format: format.simple(),
   transports: [
-    new winston.transports.Console(),
-    // new WinstonGraylog2(options),
+    // new winston.transports.Console(),
+    new WinstonGraylog2(options),
   ],
 });
 
-export default logger;
+module.exports = logger;

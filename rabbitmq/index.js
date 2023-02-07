@@ -43,7 +43,7 @@ const createMessageChannel = async () => {
       durable: true,
     });
 
-    logger.info(`RabbitMQ connected and channel ready to publish message on default Exchange and QUEUE: '${queue}'...`);
+    logger.info('RabbitMQ connected and channel ready...');
   } catch (e) {
     logger.error('Error creating channel', e);
     process.exit(0);
@@ -95,6 +95,10 @@ const startRabbitConn = async () => {
   }
 };
 
+const getRabbitMqChannel = () => rabbitPubChannel;
+
+const getRabbitMqQueue = () => queue;
+
 module.exports = {
-  startRabbitConn, publishOnMessageQueue,
+  startRabbitConn, publishOnMessageQueue, getRabbitMqChannel, getRabbitMqQueue,
 };

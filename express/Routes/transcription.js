@@ -1,8 +1,6 @@
 const express = require('express');
 const { AUTH_TOKEN } = require('../../utils/constants');
-const { getTranscription, getTranscriptionByTaskId, publishTranscriptionToRabbit } = require('../Controllers/transcription');
-const NotAllowedException = require('../../utils/notAllowedException');
-const AlreadyProcessedException = require('../../utils/alreadyProcessedException');
+const { getTranscriptionByTaskId, publishTranscriptionToRabbit } = require('../Controllers/transcription');
 
 const router = express.Router();
 
@@ -48,7 +46,7 @@ router.post('/generate', async (req, res) => {
       audioUrl, language, taskId, masterUserId,
     } = body;
 
-    await publishTranscriptionToRabbit(audioUrl, language, taskId, masterUserId);
+    await publishTranscriptionToRabbit(audioUrl, taskId, masterUserId, language);
 
     res.status(200).json({ message: 'Message published to RabbitMQ' });
   } catch (e) {

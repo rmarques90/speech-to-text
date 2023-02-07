@@ -1,7 +1,7 @@
-import axios from 'axios';
-import logger from '../Logging';
+const axios = require('axios');
+const logger = require('../Logging');
 
-export default class NectarService {
+class NectarService {
   constructor(props) {
     this.masterUserId = props.masterUserId;
     this.nectarBackofficeHost = process.env.NECTAR_BACKOFFICE_HOST || 'http://localhost:4567/backoffice';
@@ -25,3 +25,5 @@ export default class NectarService {
     return false;
   }
 }
+
+module.exports = NectarService;

@@ -1,4 +1,4 @@
-export default class TranscriptBean {
+class TranscriptBean {
   constructor({
     audioUrl, taskId, language, masterUserId,
   }) {
@@ -17,3 +17,5 @@ export default class TranscriptBean {
     });
   }
 }
+
+module.exports = TranscriptBean;
