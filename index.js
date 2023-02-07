@@ -4,8 +4,8 @@ const cors = require('cors');
 const bodyparser = require('body-parser');
 const { startConnection } = require('./mongodb');
 const TranscriptionRoutes = require('./express/Routes/transcription');
-
-require('./scheduler'); // start scheduler
+const { startRabbitConn } = require('./rabbitmq');
+const logger = require('./Logging');
 
 dotenv.config();
 
@@ -44,11 +44,12 @@ const init = async () => {
 
   // initiate mongoconnection
   await startConnection();
+  await startRabbitConn();
 
   const PORT = process.env.PORT || 3000;
 
   app.listen(PORT, () => {
-    console.log(`initiated on port ${PORT}`);
+    logger.info(`initiated on port ${PORT}`);
   });
 };
 

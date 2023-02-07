@@ -19,8 +19,11 @@ const Transcription = new Schema({
   timeSeconds: {
     type: Number,
   },
-  userId: {
-    type: mongoose.ObjectId,
+  masterUserId: {
+    type: Number,
+  },
+  taskId: {
+    type: Number,
   },
 }, {
   timestamps: true,

@@ -10,6 +10,10 @@ const updateTranscription = async (_id, transcription) => Transcription.updateOn
 
 const findTranscriptionByUrl = async (url) => Transcription.findOne({ url }).exec();
 
+const listTranscriptionsByMasterUserId = async (masterUserId) => Transcription.find({ masterUserId }).exec();
+
+const findTranscriptionByTaskIdAndMasterUserId = async (taskId, masterUserId) => Transcription.findOne({ taskId, masterUserId }).exec();
+
 module.exports = {
-  saveTranscription, findTranscriptionByUrl, updateTranscription,
+  saveTranscription, findTranscriptionByUrl, updateTranscription, listTranscriptionsByMasterUserId, findTranscriptionByTaskIdAndMasterUserId,
 };

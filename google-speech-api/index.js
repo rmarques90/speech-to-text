@@ -2,6 +2,7 @@
 const axios = require('axios');
 const speech = require('@google-cloud/speech');
 const fs = require('fs');
+const logger = require('../Logging');
 
 let client;
 
@@ -24,7 +25,7 @@ const downloadAndGetAudioFile = async (urlToRequestAudioFile, filename) => {
     await new Promise((resolve, reject) => {
       audioFileDownload.data.pipe(file);
       file.on('close', resolve);
-      file.on('error', console.error);
+      file.on('error', logger.error);
     });
   } catch (e) {
     throw Error(`error downloading file -- ${e}`);
@@ -57,11 +58,11 @@ const transcriptAudioFromUrl = async (url, languague = 'pt-BR', model = 'phone_c
   };
 
   const [response] = await getSpeechClient().recognize(request);
-  console.log(response);
+  logger.info(response);
   const transcription = response.results
     .map((result) => result.alternatives[0].transcript)
     .join('\n');
-  console.log(`Transcription: ${transcription}`);
+  logger.info(`Transcription: ${transcription}`);
 
   const billedTime = response.totalBilledTime.seconds;
 

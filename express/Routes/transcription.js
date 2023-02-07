@@ -1,6 +1,8 @@
 const express = require('express');
 const { AUTH_TOKEN } = require('../../utils/constants');
-const { getTranscription } = require('../Controllers/transcription');
+const { getTranscription, getTranscriptionByTaskId, publishTranscriptionToRabbit } = require('../Controllers/transcription');
+const NotAllowedException = require('../../utils/notAllowedException');
+const AlreadyProcessedException = require('../../utils/alreadyProcessedException');
 
 const router = express.Router();
 
@@ -13,7 +15,28 @@ router.use(async (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-router.post('/phone-call', async (req, res) => {
+router.get('/get-by-task/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  const { masterUserId } = req.query;
+  if (!taskId || !masterUserId) {
+    res.status(400).json({ message: 'invalid task id or master user id' });
+    return;
+  }
+
+  try {
+    const transcriptionObj = await getTranscriptionByTaskId(taskId, masterUserId);
+    if (transcriptionObj) {
+      res.status(200).json(transcriptionObj);
+    } else {
+      res.status(404).json({ message: 'transcription not found for task' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: e.toString() });
+  }
+});
+
+router.post('/generate', async (req, res) => {
   const { body } = req;
   if (!body) {
     res.status(400).json({ message: 'invalid body' });
@@ -21,12 +44,24 @@ router.post('/phone-call', async (req, res) => {
   }
 
   try {
-    const transcriptionObj = await getTranscription(body.audioUrl, body.language);
+    const {
+      audioUrl, language, taskId, masterUserId,
+    } = body;
 
-    res.status(200).json(transcriptionObj);
+    await publishTranscriptionToRabbit(audioUrl, language, taskId, masterUserId);
+
+    res.status(200).json({ message: 'Message published to RabbitMQ' });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: e.toString() });
+    let status = 500;
+    let message = '';
+    if (e.statusCode) {
+      status = e.statusCode;
+    }
+    if (e.message) {
+      message = e.message;
+    }
+    res.status(status).json({ message });
   }
 });
 
